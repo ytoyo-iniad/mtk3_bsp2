@@ -2,7 +2,7 @@
  *----------------------------------------------------------------------
  *    micro T-Kernel 3.0 BSP 2.0
  *
- *    Copyright (C) 2013 by Ken Sakamura.
+ *    Copyright (C) 2023 by Ken Sakamura.
  *    This software is distributed under the T-License 2.1.
  *----------------------------------------------------------------------
  *
@@ -56,6 +56,9 @@
 
 #elif defined(_RAFSP_ARDUINO_UNOR4_)
 #include <sys/sysdepend/ra_fsp/arduino_unor4/machine.h>
+
+#elif defined(_NXP_EVK_LPC55S69_)
+#include <sys/sysdepend/lpc_xps/evk_lpc55s69/machine.h>
 
 #endif
 

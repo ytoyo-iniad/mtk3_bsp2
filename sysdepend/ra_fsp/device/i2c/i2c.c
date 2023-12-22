@@ -2,7 +2,7 @@
  *----------------------------------------------------------------------
  *    micro T-Kernel 3.0 BSP 2.0
  *
- *    Copyright (C) 2013 by Ken Sakamura.
+ *    Copyright (C) 2023 by Ken Sakamura.
  *    This software is distributed under the T-License 2.1.
  *----------------------------------------------------------------------
  *
@@ -21,14 +21,14 @@
 #include <tk/tkernel.h>
 #include <tk/device.h>
 
-#include <sysdepend/stm32_cube/cpu_status.h>
+#include <sysdepend/lpc_xps/cpu_status.h>
 #include <mtkernel/kernel/knlinc/tstdlib.h>
 #include <mtkernel/device/common/drvif/msdrvif.h>
 #include "i2c_cnf.h"
 
 /*
  *	i2c.c
- *	I2C device driver (STM32Cube FW)
+ *	I2C device driver (LPC MCUXpresso)
 */
 
 /*---------------------------------------------------------------------*/
