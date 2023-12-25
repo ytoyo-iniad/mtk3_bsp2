@@ -6,16 +6,16 @@
  *    This software is distributed under the T-License 2.1.
  *----------------------------------------------------------------------
  *
- *    Released by TRON Forum(http://www.tron.org) at 2023/12.
+ *    Released by TRON Forum(http://www.tron.org) at 2024/01.
  *
  *----------------------------------------------------------------------
  */
 
 #include <sys/machine.h>
-#ifdef MTKBSP_RAFSP
+#ifdef MTKBSP_MPCXPRESSO
 
 /*
- *	devinit.c (RA FSP)
+ *	devinit.c (LCP MPCXpresso)
  *	Device-Dependent Initialization
  */
 #include <tk/tkernel.h>
@@ -72,4 +72,4 @@ EXPORT ER knl_finish_device( void )
 }
 
 #endif /* USE_SHUTDOWN */
-#endif /* MTKBSP_RAFSP */
+#endif /* MTKBSP_MPCXPRESSO */

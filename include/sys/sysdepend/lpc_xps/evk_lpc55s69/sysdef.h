@@ -22,7 +22,7 @@
 #define _MTKBSP_SYS_SYSDEF_DEPEND_H_
 
 /* CPU-dependent definition */
-#include <sys/sysdepend/lpc_xps/cpu/lpc59s69/sysdef.h>
+#include <sys/sysdepend/lpc_xps/cpu/lpc55s69/sysdef.h>
 
 /* ------------------------------------------------------------------------ */
 /* Clock frequency

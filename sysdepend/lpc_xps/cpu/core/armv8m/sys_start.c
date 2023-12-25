@@ -22,6 +22,7 @@
 #include <kernel.h>
 #include "sysdepend.h"
 
+#include <cmsis_gcc.h>
 
 /* Exception handler table (RAM) */
 EXPORT UW knl_exctbl[sizeof(UW)*(N_SYSVEC + N_INTVEC)]
@@ -29,9 +30,9 @@ EXPORT UW knl_exctbl[sizeof(UW)*(N_SYSVEC + N_INTVEC)]
 
 EXPORT UW *knl_exctbl_o;	// Exception handler table (Origin)
 
-EXPORT void		*knl_lowmem_top;	// Head of area (Low address)
-EXPORT void		*knl_lowmem_limit;	// End of area (High address)
-IMPORT const void	*end;			// End Address of main BSS section
+EXPORT void		*knl_lowmem_top;		// Head of area (Low address)
+EXPORT void		*knl_lowmem_limit;		// End of area (High address)
+IMPORT const void	*__end_noinit_RAM;	// End Address of No init section
 
 #if USE_STATIC_SYS_MEM
 EXPORT UW knl_system_mem[SYSTEM_MEM_SIZE/sizeof(UW)] __attribute__((section(".mtk_sysmem")));
@@ -79,8 +80,8 @@ EXPORT void knl_start_mtkernel(void)
 	} else {
 		knl_lowmem_top = (UW*)SYSTEMAREA_TOP;
 	}
-	if((UW)knl_lowmem_top < (UW)&__stack) {
-		knl_lowmem_top = (UW*)&__stack;
+	if((UW)knl_lowmem_top < (UW)&__end_noinit_RAM) {
+		knl_lowmem_top = (UW*)&__end_noinit_RAM;
 	}
 
 	if((SYSTEMAREA_END != 0) && (INTERNAL_RAM_END > CNF_SYSTEMAREA_END)) {
@@ -101,7 +102,7 @@ EXPORT void knl_start_mtkernel(void)
 
 #if !USE_SPMON
 	/* Disable SPMON */
-
+	__set_MSPLIM((uint32_t)knl_sysmem_top);
 #endif
 
 	/* Startup Kernel */

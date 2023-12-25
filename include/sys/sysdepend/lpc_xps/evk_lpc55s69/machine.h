@@ -36,7 +36,7 @@
 #define MTKBSP_CPU_CORE_ARMV8M		1	/* Target CPU-Core type : ARMv8-M */
 #define MTKBSP_CPU_CORE_ACM33		1	/* Target CPU-Core      : ARM Cortex-M33 */
 
-#define KNL_SYSDEP_PATH	sysdepend/lpc_xpresso		/* Kernel sysdepend path */
+#define KNL_SYSDEP_PATH	sysdepend/lpc_xps		/* Kernel sysdepend path */
 
 #define TARGET_DIR	lpc_xps/evk_lpc55s69		/* Sysdepend-Directory name */
 #define TARGET_GRP_DIR	lpc_xps 			/* Sysdepend-Group-Directory name */

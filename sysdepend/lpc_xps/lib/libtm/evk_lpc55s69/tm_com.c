@@ -25,7 +25,7 @@
 
 /* 
  */
-/* register definition
+/* register definition */
 
 EXPORT	void	tm_snd_dat( const UB* buf, INT size )
 {
