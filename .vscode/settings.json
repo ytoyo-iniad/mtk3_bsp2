@@ -1,0 +1,7 @@
+{
+	"C_Cpp.dimInactiveRegions": false,
+	"files.associations": {
+		"machine.h": "c",
+		"config_bsp.h": "c"
+	}
+}

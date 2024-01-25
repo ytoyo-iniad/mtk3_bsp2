@@ -2,11 +2,11 @@
  *----------------------------------------------------------------------
  *    micro T-Kernel 3.0 BSP 2.0
  *
- *    Copyright (C) 2013 by Ken Sakamura.
+ *    Copyright (C) 2023-2024 by Ken Sakamura.
  *    This software is distributed under the T-License 2.1.
  *----------------------------------------------------------------------
  *
- *    Released by TRON Forum(http://www.tron.org) at 2023/12.
+ *    Released by TRON Forum(http://www.tron.org) at 2024/02.
  *
  *----------------------------------------------------------------------
  */
@@ -21,14 +21,14 @@
 #include <tk/tkernel.h>
 #include <tk/device.h>
 
-#include <sysdepend/stm32_cube/cpu_status.h>
+#include <sysdepend/ra_fsp/cpu_status.h>
 #include <mtkernel/kernel/knlinc/tstdlib.h>
 #include <mtkernel/device/common/drvif/msdrvif.h>
 #include "i2c_cnf.h"
 
 /*
  *	i2c.c
- *	I2C device driver (STM32Cube FW)
+ *	I2C device driver (RA FPS)
 */
 
 /*---------------------------------------------------------------------*/
