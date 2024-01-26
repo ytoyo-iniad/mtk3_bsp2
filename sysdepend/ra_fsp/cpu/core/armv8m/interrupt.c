@@ -103,10 +103,6 @@ void knl_default_handler(void)
 EXPORT ER knl_init_interrupt( void )
 {
 	/* Set Exception handler */
-	for(INT i = 1; i < N_SYSVEC + N_INTVEC; i++) {
-		knl_exctbl[i]	= (UW)knl_default_handler;
-	}
-	
 	knl_exctbl[14]	= (UW)knl_dispatch_entry;
 	knl_exctbl[15]	= (UW)knl_systim_inthdr;
 

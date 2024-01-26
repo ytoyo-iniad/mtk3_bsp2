@@ -23,6 +23,6 @@
 #define DEV_HAL_ADC_TMOUT	(500)
 
 
-#define DEV_HAL_ADC_UNITNM	(3)	// Number of A/DC units (max 26)
+#define DEV_HAL_ADC_UNITNM	(2)	// Number of A/DC units (max 26)
 
 #endif	/* _DEV_HAL_ADC_CNF_H_ */

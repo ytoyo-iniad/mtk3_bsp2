@@ -79,7 +79,7 @@ LOCAL ER write_atr(T_HAL_ADC_DCB *p_dcb, T_DEVREQ *req)
  */
 
 /* HAL Callback functions */
-LOCAL void HAL_ADC_Callback(adc_callback_args_t *p_args)
+void HAL_ADC_Callback(adc_callback_args_t *p_args)
 {
 	T_HAL_ADC_DCB	*p_dcb;
 
@@ -96,7 +96,7 @@ LOCAL void HAL_ADC_Callback(adc_callback_args_t *p_args)
 			p_dcb->err = E_IO;
 			break;
 	}
-
+	
 	LEAVE_TASK_INDEPENDENT
 }
 
@@ -104,6 +104,7 @@ LOCAL ER read_data(T_HAL_ADC_DCB *p_dcb, T_DEVREQ *req)
 {
 	uint16_t	val;
 	UINT		wflgptn, rflgptn;
+	fsp_err_t	fsp_err;
 	ER		err;
 
 	if(req->size == 0) {
@@ -113,15 +114,20 @@ LOCAL ER read_data(T_HAL_ADC_DCB *p_dcb, T_DEVREQ *req)
 
 	wflgptn = 1 << p_dcb->unit;
 	tk_clr_flg(id_flgid, ~wflgptn);
-	R_ADC_ScanStart(p_dcb->hadc);
+	fsp_err = R_ADC_ScanStart(p_dcb->hadc);
+	if(fsp_err != FSP_SUCCESS) return E_IO;
 
 	err = tk_wai_flg(id_flgid, wflgptn, TWF_ANDW | TWF_BITCLR, &rflgptn, DEV_HAL_ADC_TMOUT);
 	if(err >= E_OK) {
 		err = p_dcb->err;
 		if(err >= E_OK) {
-			R_ADC_Read(p_dcb->hadc, req->start, &val);
-			*(UW*)(req->buf) = val;
-			req->asize= 1;
+			fsp_err = R_ADC_Read(p_dcb->hadc, req->start, &val);
+			if(fsp_err == FSP_SUCCESS) {
+				*(UW*)(req->buf) = val;
+				req->asize= 1;
+			} else {
+				err = E_IO;
+			}
 		}
 	}
 
@@ -142,15 +148,19 @@ LOCAL ER write_data(T_HAL_ADC_DCB *p_dcb, T_DEVREQ *req)
 LOCAL ER dev_adc_openfn( ID devid, UINT omode, T_MSDI *p_msdi)
 {
 	T_HAL_ADC_DCB	*p_dcb;
+	fsp_err_t	fsp_err;
 
 	p_dcb = (T_HAL_ADC_DCB*)(p_msdi->dmsdi.exinf);
 	if(p_dcb->hadc == NULL) return E_IO;
 
 	p_dcb->omode = omode;
 
-	R_ADC_Open(p_dcb->hadc, p_dcb->cadc);
-	R_ADC_ScanCfg(p_dcb->hadc, p_dcb->cfadc);
-	R_ADC_CallbackSet(p_dcb->hadc, HAL_ADC_Callback, p_dcb, NULL);
+	fsp_err = R_ADC_Open(p_dcb->hadc, p_dcb->cadc);
+	if(fsp_err != FSP_SUCCESS) return E_IO;
+	fsp_err = R_ADC_ScanCfg(p_dcb->hadc, p_dcb->cfadc);
+	if(fsp_err != FSP_SUCCESS) return E_IO;
+	fsp_err = R_ADC_CallbackSet(p_dcb->hadc, HAL_ADC_Callback, p_dcb, NULL);
+	if(fsp_err != FSP_SUCCESS) return E_IO;
 
 	return E_OK;
 }

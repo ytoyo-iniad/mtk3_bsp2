@@ -21,20 +21,26 @@ LOCAL T_CTSK ctsk_2 = {				// Task creation information
 
 LOCAL void task_1(INT stacd, void *exinf)
 {
+	UW	data[2];
+	ID	dd;
+	ER	err;
+
+	dd = tk_opn_dev((UB*)"hladca", TD_READ);
+
 	while(1) {
-		tm_printf((UB*)"task 1\n");
+		err = tk_srea_dev(dd, 0, &data[0], 1, NULL);
+		tk_dly_tsk(100);
+		tm_printf((UB*)"AN000 = %d  ", data[0]);
+
+		err = tk_srea_dev(dd, 4, &data[1], 1, NULL);
+		tk_dly_tsk(100);
+		tm_printf((UB*)"AN004 = %d\n", data[1]);
 		tk_dly_tsk(500);
 	}
 }
 
-void func1(UW par) {
-//	tm_printf((UB*)"%d\n", par);
-	func1(par+1);
-}
-
 LOCAL void task_2(INT stacd, void *exinf)
 {
-	func1(1);
 	while(1) {
 		tm_printf((UB*)"task 2\n");
 		tk_dly_tsk(700);
@@ -51,7 +57,7 @@ EXPORT INT usermain(void)
 	tk_sta_tsk(tskid_1, 0);
 
 	tskid_2 = tk_cre_tsk(&ctsk_2);
-	tk_sta_tsk(tskid_2, 0);
+//	tk_sta_tsk(tskid_2, 0);
 
 	tk_slp_tsk(TMO_FEVR);
 
