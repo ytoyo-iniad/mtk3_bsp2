@@ -43,6 +43,11 @@ EXPORT void		*knl_sysmem_top	= 0;
 EXPORT void		*knl_sysmem_end	= 0;
 #endif
 
+Inline void set_msplim(uint32_t MainStackPtrLimit)
+{
+  Asm ("msr msplim, %0" : : "r" (MainStackPtrLimit));
+}
+
 EXPORT void knl_start_mtkernel(void)
 {
 	UW	*src, *top;
@@ -97,8 +102,8 @@ EXPORT void knl_start_mtkernel(void)
 #endif	// USE_DEBUG_MEMINFO
 #endif	// USE_IMALLOC
 
-	/* Stack pointer protection */
-//	__set_MSPLIM((uint32_t)knl_sysmem_top);	// Full range of system memory
+	/* Temporarily disable stack pointer protection */
+	set_msplim((uint32_t)INTERNAL_RAM_START);
 
 	/* Startup Kernel */
 	knl_main();		// *** No return ****/

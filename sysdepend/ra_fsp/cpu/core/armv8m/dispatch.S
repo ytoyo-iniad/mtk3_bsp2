@@ -90,14 +90,17 @@ Csym(knl_dispatch_entry):
 	cmp	r1, #0
 	bne	l_dispatch_000
 
-#if USE_SPMON
-
-#endif
+//#if USE_SPMON
+//	ldr	r2, =INTERNAL_RAM_START
+//	msr	msplim, r2
+//
+//#endif
 	// Set temporal stack
 	ldr	sp, =(Csym(knl_tmp_stack) + TMP_STACK_SIZE)
 
 #if USE_SPMON
-
+	ldr	r2, =Csym(knl_tmp_stack)
+	msr	msplim, r2
 #endif
 
 	b	l_dispatch_100
@@ -156,14 +159,16 @@ l_dispatch_110:
 l_dispatch_120:			// Switch to 'schedtsk'
 	str	r8, [r4]			// ctxtsk = schedtsk
 
-#if USE_SPMON
-
-#endif
+//#if USE_SPMON
+//	ldr	r2, =INTERNAL_RAM_START
+//	msr	msplim, r2
+//#endif
 
 	ldr	sp, [r8, #TCB_tskctxb + CTXB_ssp]	// Restore 'ssp' from TCB
 
 #if USE_SPMON
-
+	ldr	r2, [r8, #TCB_tskctxb + CTXB_spsa]
+	msr	msplim, r2
 #endif
 
 /*----------------- Restore "schedtsk" context. -----------------*/

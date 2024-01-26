@@ -27,8 +27,14 @@ LOCAL void task_1(INT stacd, void *exinf)
 	}
 }
 
+void func1(UW par) {
+//	tm_printf((UB*)"%d\n", par);
+	func1(par+1);
+}
+
 LOCAL void task_2(INT stacd, void *exinf)
 {
+	func1(1);
 	while(1) {
 		tm_printf((UB*)"task 2\n");
 		tk_dly_tsk(700);
