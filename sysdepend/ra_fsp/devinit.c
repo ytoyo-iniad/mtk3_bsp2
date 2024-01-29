@@ -47,6 +47,11 @@ EXPORT ER knl_start_device( void )
 	if(err < E_OK) return err;
 #endif
 
+#if DEVCNF_USE_HAL_I3C
+	err = dev_init_hal_i3c(0, &g_i3c0_ctrl, &g_i3c0_cfg);
+	if(err < E_OK) return err;
+#endif
+
 #if DEVCNF_USE_HAL_SCI_IIC
 	err = dev_init_hal_i2c(0, &g_i2c0_ctrl, &g_i2c0_cfg);
 	if(err < E_OK) return err;

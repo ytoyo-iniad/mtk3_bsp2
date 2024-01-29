@@ -29,6 +29,10 @@
 #include <sysdepend/ra_fsp/device/i2c/i2c.h>
 #endif
 
+#if DEVCNF_USE_HAL_I3C
+#include <sysdepend/ra_fsp/device/i3c/i3c.h>
+#endif
+
 #if DEVCNF_USE_HAL_SCI_IIC
 #include <sysdepend/ra_fsp/device/sci_i2c/sci_i2c.h>
 #endif
